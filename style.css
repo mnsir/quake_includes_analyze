@@ -1,0 +1,20 @@
+circle {
+    fill: cadetblue;
+}
+
+svg {
+    border: 1px solid;
+}
+
+marker {
+    stroke: dimgray;
+}
+
+line {
+    stroke: gray;
+}
+
+text {
+    font-family: Consolas;
+    
+}

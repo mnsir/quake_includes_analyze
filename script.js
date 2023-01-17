@@ -44,7 +44,7 @@ node.append('rect')
     .attr('ry', 8) //ry - the y-axis radius of the ellipse used to round the corners of the rectangle
     .attr('width', d => d.name.length * 10)
     .attr('height', 24)
-    .attr('fill', '#eee')
+    .attr('fill', d => d.name.startsWith('gl_') ? '#ece' : '#eee')
     .attr('stroke', '#333')
     .attr('stroke-width', 2);
 
@@ -56,11 +56,11 @@ node.append('text')
     //.attr('dominant-baseline', 'central');
 
 var simulation = d3.forceSimulation(dataset.nodes)
-    .force('charge', d3.forceManyBody().strength(-200))
-    .force('center', d3.forceCenter(width / 2, height / 2))
-    .force('link', d3.forceLink(dataset.links).strength(0.1))
-    .force("collide", d3.forceCollide().radius(d => d.name.length * 6))
-    .force('y', d3.forceY().y(d => (1 - d.weight) * height))
+    .force('charge', d3.forceManyBody().strength(-100))
+    .force('center', d3.forceCenter(width / 2, height * 3 / 5))
+    .force('link', d3.forceLink(dataset.links).strength(0.03))
+    .force("collide", d3.forceCollide().radius(d => d.name.length * 8))
+    .force('y', d3.forceY().y(d => (1 - d.weight) * height).strength(2))
     //.force('x', d3.forceX().x(d => Math.max(0, Math.min(width, d.x))))
     .on('tick', ticked);
 
@@ -68,7 +68,9 @@ function ticked() {
     link.attr('x1', d => d.source.x + d.source.name.length * 5)
         .attr('y1', d => d.source.y)
         .attr('x2', d => d.target.x + d.target.name.length * 5)
-        .attr('y2', d => d.target.y + 25);
+        .attr('y2', d => d.target.y + 25)
+        
+    .attr('stroke', d=>(d.source.name.split('.')[0] == d.target.name.split('.')[0]) ? 'red' : 'grey');
 
     node.attr('transform', d => `translate(${d.x},${d.y})`);
 }

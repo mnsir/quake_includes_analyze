@@ -10,10 +10,6 @@ marker {
     stroke: dimgray;
 }
 
-line {
-    stroke: gray;
-}
-
 text {
     font-family: Consolas;
     
